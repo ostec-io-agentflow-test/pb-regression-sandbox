@@ -1,0 +1,9 @@
+{
+  "name": "pb-regression-sandbox",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Throwaway app the Power Builder regression (APB-2729) imports, builds against and resets.",
+  "type": "module",
+  "scripts": { "start": "node src/server.js", "test": "node --test" },
+  "engines": { "node": ">=20" }
+}
