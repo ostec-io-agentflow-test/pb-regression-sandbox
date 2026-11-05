@@ -1,6 +1,6 @@
 // Returns one page of items. Pages are 1-based.
 export function paginate(items, page, size) {
-  const start = page * size; // bug on purpose: should be (page - 1) * size — see the pbreg issue
+  const start = (page - 1) * size;
   return items.slice(start, start + size);
 }
 
