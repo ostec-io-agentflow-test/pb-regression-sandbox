@@ -4,6 +4,9 @@ import { paginate } from './paginate.js';
 
 export function handler(req, res) {
   const url = new URL(req.url, 'http://localhost');
+  if (req.method === 'GET' && url.pathname === '/health') {
+    return send(res, 200, { status: 'ok' });
+  }
   if (req.method === 'GET' && url.pathname === '/todos') {
     const page = Number(url.searchParams.get('page') ?? 1);
     return send(res, 200, paginate(listTodos(), page, 10));
