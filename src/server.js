@@ -1,5 +1,5 @@
 import { createServer } from 'node:http';
-import { addTodo, listTodos } from './todos.js';
+import { addTodo, getTodo, listTodos } from './todos.js';
 import { paginate } from './paginate.js';
 
 export function handler(req, res) {
@@ -7,6 +7,11 @@ export function handler(req, res) {
   if (req.method === 'GET' && url.pathname === '/todos') {
     const page = Number(url.searchParams.get('page') ?? 1);
     return send(res, 200, paginate(listTodos(), page, 10));
+  }
+  const todoMatch = url.pathname.match(/^\/todos\/(\d+)$/);
+  if (req.method === 'GET' && todoMatch) {
+    const todo = getTodo(Number(todoMatch[1]));
+    return todo ? send(res, 200, todo) : send(res, 404, { error: 'not found' });
   }
   if (req.method === 'POST' && url.pathname === '/todos') {
     let body = '';
