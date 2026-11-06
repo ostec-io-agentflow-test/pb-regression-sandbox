@@ -11,7 +11,13 @@ export function handler(req, res) {
   if (req.method === 'POST' && url.pathname === '/todos') {
     let body = '';
     req.on('data', (c) => (body += c));
-    req.on('end', () => send(res, 201, addTodo(JSON.parse(body || '{}').title)));
+    req.on('end', () => {
+      const title = JSON.parse(body || '{}').title;
+      if (typeof title === 'string' && title.length > 200) {
+        return send(res, 400, { message: 'title must be 200 characters or fewer' });
+      }
+      return send(res, 201, addTodo(title));
+    });
     return;
   }
   send(res, 404, { error: 'not found' });
