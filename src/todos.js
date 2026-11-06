@@ -11,6 +11,13 @@ export function listTodos() {
   return [...todos];
 }
 
+export function getTodoStats() {
+  return {
+    total: todos.length,
+    done: todos.filter((todo) => todo.done).length,
+  };
+}
+
 export function completeTodo(id) {
   const todo = todos.find((t) => t.id === id);
   if (todo) todo.done = true;
