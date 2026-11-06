@@ -7,8 +7,8 @@ export function addTodo(title) {
   return todo;
 }
 
-export function listTodos() {
-  return [...todos];
+export function listTodos(done) {
+  return todos.filter((todo) => done === undefined || todo.done === done);
 }
 
 export function completeTodo(id) {

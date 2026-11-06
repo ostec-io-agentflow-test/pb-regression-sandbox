@@ -6,7 +6,9 @@ export function handler(req, res) {
   const url = new URL(req.url, 'http://localhost');
   if (req.method === 'GET' && url.pathname === '/todos') {
     const page = Number(url.searchParams.get('page') ?? 1);
-    return send(res, 200, paginate(listTodos(), page, 10));
+    const done = url.searchParams.get('done');
+    const filteredTodos = done === 'true' ? listTodos(true) : listTodos();
+    return send(res, 200, paginate(filteredTodos, page, 10));
   }
   if (req.method === 'POST' && url.pathname === '/todos') {
     let body = '';
